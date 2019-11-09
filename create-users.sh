@@ -38,3 +38,17 @@ do
     printf "Now adding STUDENT user: $student\nGroups: $STU_GROUPS\nSkel:$STUDENTS_SKEL\nExpiration: $STU_EXPIRATION\n\n";
     useradd -m -k $STUDENTS_SKEL -e $STU_EXPIRATION -f 0 -G $STU_GROUPS  $student;
 done
+
+# Create Teacher Users loop through array with the syntax below 
+for teacher in "${TEACHERS[@]}";
+do 
+    groupadd $TEACH_GROUPS;
+    printf "Now adding TEACHER user: $teacher\nGroups: $TEACH_GROUPS\nSkel:$TEACHERS_SKEL\nExpiration: $TEACH_EXPIRATION\n\n";
+    useradd -m -k $TEACHERS_SKEL -e $TEACH_EXPIRATION -f 0 -G $TEACH_GROUPS  $teacher;
+done
+
+function add_admins(){
+    for admin in "${ADMINS[@]}"
+    do
+        usermod -aG ADMIN_GROUPS;
+}
