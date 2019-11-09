@@ -2,7 +2,7 @@
 # Title: Create Users 
 
 # Groups to add users to
-ADMIN_GROUPS='staff,sudo,adm';
+ADMIN_GROUPS=(sudo adm);
 TEACH_GROUPS='staff';
 STU_GROUPS='student';
 
@@ -27,28 +27,41 @@ ADMIN_EXPIRATION='2020-03-01';
 #printf "\nAdmin Groups: $ADMIN_GROUPS\nTeachers Groups:$TEACH_GROUPS\nStudent groups:$STU_GROUPS\nUsers:${USERS[*]}\nstudent skel:$STUDENTS_SKEL\nTeachers skel: $TEACHERS_SKEL\n"
 
 # Create needed groups
-groupadd $STU_GROUPS;
-#groupadd $TEACH_GROUPS;
-#groupadd $ADMIN_GROUPS;
+function add_groups(){
+    groups=($STU_GROUPS $TEACH_GROUPS $ADMIN_GROUPS[0], $ADMIN_GROUPS[1]);
+    for group in ${groups[@]}
+    do 
+        printf "Creating group $group";
+        groupadd $group  2>/dev/null;
+    done
+}
 
 # Create Students Users loop through array with the syntax below 
-for student in "${STUDENTS[@]}";
-do 
-    groupadd $STU_GROUPS;
-    printf "Now adding STUDENT user: $student\nGroups: $STU_GROUPS\nSkel:$STUDENTS_SKEL\nExpiration: $STU_EXPIRATION\n\n";
-    useradd -m -k $STUDENTS_SKEL -e $STU_EXPIRATION -f 0 -G $STU_GROUPS  $student;
-done
+function add_students(){
+    for student in "${STUDENTS[@]}";
+    do 
+        printf "Now adding STUDENT user: $student\nGroups: $STU_GROUPS\nSkel:$STUDENTS_SKEL\nExpiration: $STU_EXPIRATION\n\n";
+        useradd -m -k $STUDENTS_SKEL -e $STU_EXPIRATION -f 0 -s $DEFAULT_SHELL -G $STU_GROUPS  $student;
+    done
+}
 
 # Create Teacher Users loop through array with the syntax below 
-for teacher in "${TEACHERS[@]}";
-do 
-    groupadd $TEACH_GROUPS;
-    printf "Now adding TEACHER user: $teacher\nGroups: $TEACH_GROUPS\nSkel:$TEACHERS_SKEL\nExpiration: $TEACH_EXPIRATION\n\n";
-    useradd -m -k $TEACHERS_SKEL -e $TEACH_EXPIRATION -f 0 -G $TEACH_GROUPS  $teacher;
-done
+function add_teachers(){
+    for teacher in "${TEACHERS[@]}";
+    do 
+        printf "Now adding TEACHER user: $teacher\nGroups: $TEACH_GROUPS\nSkel:$TEACHERS_SKEL\nExpiration: $TEACH_EXPIRATION\n\n";
+        useradd -m -k $TEACHERS_SKEL -e $TEACH_EXPIRATION -f 0  -s $DEFAULT_SHELL -G $TEACH_GROUPS  $teacher;
+    done
+}
 
 function add_admins(){
     for admin in "${ADMINS[@]}"
     do
-        usermod -aG ADMIN_GROUPS;
+        for group in "{$ADMIN_GROUPS[@]}"
+        do
+            printf "\nAdding admin: $admin to group: $group";
+            usermod -aG $group $admin;
+        done
+    done
 }
+
