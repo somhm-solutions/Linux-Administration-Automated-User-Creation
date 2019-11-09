@@ -2,23 +2,39 @@
 # Desc: Clean up for items created 
 # Run as root
 
-# Groups to add users to
-ADMIN_GROUPS='staff,sudo,adm';
-TEACH_GROUPS='staff';
-STU_GROUPS='student';
+# Groups to delete
+GROUPS=(staff sudo adm student);
 
-# Users to add to system
-STUDENTS=(Andrew Oscar Teresa Bill);
-TEACHERS=(Ted Irene AAron);
+# Users to delete
+USERS=(Andrew Oscar Teresa Bill Ted Irene AAron);
 
-# Skel Dirs to Use
-TEACHERS_SKEL='/tmp/teachers-skel/';
-STUDENTS_SKEL='/tmp/students-skel/';
-
-# Account Expiration Dates 
-STU_EXPIRATION='2020-01-01';
-TEACH_EXPIRATION='2020-02-01';
-ADMIN_EXPIRATION='2020-03-01';
+# Dirs to delete
+SKEL_DIRS=('/tmp/teachers-skel/' '/tmp/students-skel/');
 
 
-groupdel 
+# Function to delete groups
+function delete_groups(){
+    for group in ${GROUPS[@]}
+    do
+        echo "Deleting Group: $group";
+        groupdel -f $group;
+    done
+}
+
+# Function to delete users
+function delete_users(){
+    for user in ${USERS[@]}
+    do
+        echo "Deleting Group: $user";
+        userdel -r $user;
+    done
+}
+
+# Function to delete dirs
+function delete_dirs(){
+    for skel_dir in ${SKEL_DIRS[@]}
+    do
+        echo "Deleting Group: $skel_dir";
+        rm -r $skel_dir;
+    done
+}
