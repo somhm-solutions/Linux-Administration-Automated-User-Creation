@@ -6,7 +6,7 @@ STUDENTS='/tmp/students-skel';
 
 
 
-# Skel Builds
+# Skel Builds using bash Array Syntax
 TEACHERS_DIRS=(Lessons Homework Grades Attendance Scheduling Media Support);
 STUDENTS_DIRS=(Lessons Homework Grades Media Support);
 
