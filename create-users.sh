@@ -2,13 +2,39 @@
 # Title: Create Users 
 
 # Groups to add users to
-ADMIN_GROUPS=(staff sudo adm);
-TEACH_GROUPS=(staff);
-STU_GROUPS=(student);
+ADMIN_GROUPS='staff,sudo,adm';
+TEACH_GROUPS='staff';
+STU_GROUPS='student';
 
 # Users to add to system
-USERS=(Andrew Oscar Teresa Bill Ted Irene AAron);
+STUDENTS=(Andrew Oscar Teresa Bill);
+TEACHERS=(Ted Irene AAron);
+
+# Skel Dirs to Use
+TEACHERS_SKEL='/tmp/teachers-skel/';
+STUDENTS_SKEL='/tmp/students-skel/';
+
+# Default Shell
+DEFAULT_SHELL='/bin/bash'
+
+# Account Expiration Dates 
+STU_EXPIRATION='2020-01-01';
+TEACH_EXPIRATION='2020-02-01';
+ADMIN_EXPIRATION='2020-03-01';
 
 # Test Values
-printf "Admin Groups: ${ADMIN_GROUPS[*]}\nTeachers Groups:${TEACH_GROUPS[*]}\nStudent groups:${STU_GROUPS[*]}\nUsers:${USERS[*]}"
+#echo "Testing Values to be created:"
+#printf "\nAdmin Groups: $ADMIN_GROUPS\nTeachers Groups:$TEACH_GROUPS\nStudent groups:$STU_GROUPS\nUsers:${USERS[*]}\nstudent skel:$STUDENTS_SKEL\nTeachers skel: $TEACHERS_SKEL\n"
 
+# Create needed groups
+groupadd $STU_GROUPS;
+#groupadd $TEACH_GROUPS;
+#groupadd $ADMIN_GROUPS;
+
+# Create Students Users loop through array with the syntax below 
+for student in "${STUDENTS[@]}";
+do 
+    groupadd $STU_GROUPS;
+    printf "Now adding STUDENT user: $student\nGroups: $STU_GROUPS\nSkel:$STUDENTS_SKEL\nExpiration: $STU_EXPIRATION\n\n";
+    useradd -m -k $STUDENTS_SKEL -e $STU_EXPIRATION -f 0 -G $STU_GROUPS  $student;
+done
