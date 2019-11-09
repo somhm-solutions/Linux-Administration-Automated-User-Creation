@@ -4,12 +4,13 @@
 $TEACHERS='/tmp/teachers-skel';
 $STUDENTS='/tmp/students-skel';
 
+# Test values 
+printf "Teachers: $TEACHERS\nStudents: $STUDENTS";
+
 # Skel Builds
-$TEACHER_DIRS=(Lessons Homework Grades Attendance Scheduling Media Support);
-$STUDENT_DIRS=(Lessons Homework Grades Media Support);
+$TEACHERS_DIRS=(Lessons Homework Grades Attendance Scheduling Media Support);
+$STUDENTS_DIRS=(Lessons Homework Grades Media Support);
+printf "Teachers Dirs:$(TEACHERS_DIRS)\n Students Dirs:$(STUDENTS_DIRS)"
 
-# Build skel directory in /tmp Place in /etc if youd like to keep
 
-mkdir -p "$TEACHERS/${TEACHER_DIRS[*]}"
-#mkdir -p /tmp/students-skel/
-
+# Build skel directory in /tmp Place in /etc if youd like to kee
