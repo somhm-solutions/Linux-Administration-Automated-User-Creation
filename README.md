@@ -14,9 +14,17 @@
 		* ) *clean-up.sh*
 		* Deletes all users and groups
 		* Deletes all directories and files created
+
 	* *Dependencies*:
 	* *Usage*:
+		- 1) *RUN* **create-users.sh** as *SUDO* to create all objects in the assignment
+		- 2) *RUN* **clean-up.sh** as *SUDO* to clean up all objects created
+
 	* *Examples*:
+		"""
+			sudo bash create-users.sh;
+			sudo bash clean-up.sh;
+		"""
 
 ## *Testing*
 ### *Test Input*
