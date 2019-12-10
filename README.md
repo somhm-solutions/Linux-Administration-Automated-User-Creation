@@ -1,7 +1,5 @@
 # **Create-Bulk-Users**
 
-## Contents:
-
 ### **Description**:
 	* *Purpose*: Creates Skel directories for users, adds users & corresponding groups, 
 	* *Content*:
