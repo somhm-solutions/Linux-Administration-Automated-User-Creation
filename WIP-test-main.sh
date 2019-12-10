@@ -46,7 +46,7 @@ function test_users(){
     do
         # Test to see if each users home dir exists and has the proper skel
         echo Testing User home dir
-        [ -d "/home/$user" ] && echo "Directory: $directory, Status: PASSED" >>  $log_path || echo "Directory: $directory Status: FAILED" >>  $log_path;
+        [ -d "/home/$user" ] && echo "User: $user, Status: PASSED" >>  $log_path || echo "User: $user Status: FAILED" >>  $log_path;
 
         # Test for groups 
         usergroups=$(groups $user);
